@@ -1,5 +1,6 @@
 package br.com.estudo
 
+import br.com.estudo.exception.UnsupportedMathOperationException
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -10,7 +11,7 @@ class MathController {
     fun sum(@PathVariable("numberOne") numberOne: String?,
             @PathVariable("numberTwo") numberTwo: String?): Double {
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-           throw IllegalArgumentException("$numberOne and $numberTwo must be numbers")
+           throw UnsupportedMathOperationException("$numberOne and $numberTwo must be numbers")
         }
         return convertToDouble(numberOne) + convertToDouble(numberTwo)
     }
