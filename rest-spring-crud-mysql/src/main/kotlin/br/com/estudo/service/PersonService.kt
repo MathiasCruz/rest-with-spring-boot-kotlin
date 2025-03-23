@@ -25,17 +25,27 @@ class PersonService {
         return repository.findAll()
     }
     fun create(person: Person): Person {
-        logger.info("create")
+        logger.info("create Person $person")
         return repository.save(person)
     }
 
     fun update(person: Person): Person {
-        logger.info("update")
-        return repository.save(person)
+        logger.info("updating person $person")
+
+        val entity =repository.findById(person.id)
+            .orElseThrow(){ResourceNotFoundException("Person not found for this id :: $person.id")}
+
+        entity.firstName = person.firstName
+        entity.lastName = person.lastName
+        entity.address = person.address
+        entity.gender = person.gender
+        return repository.save(entity)
     }
 
     fun delete(id: Long) {
-        logger.info("delete")
-        return repository.deleteById(id)
+        logger.info("deleting $id")
+        val entity = repository.findById(id)
+            .orElseThrow(){ResourceNotFoundException("Person not found for this id :: $id")}
+        return repository.deleteById(entity.id)
     }
 }
