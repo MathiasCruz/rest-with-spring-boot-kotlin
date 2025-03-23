@@ -1,11 +1,10 @@
-password: &password Ryzen3900x@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rest_with_spring?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/rest_with_spring
     username: root
-    password: &password
-jpa:
-  hibernate:
-    ddl-auto: update
-  show-sql: false
+    password: Ryzen3900x
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
