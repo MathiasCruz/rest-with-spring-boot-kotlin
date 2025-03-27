@@ -1,11 +1,12 @@
 package br.com.estudo.service
 
+import br.com.estudo.data.vo.v1.PersonVO
 import br.com.estudo.exception.ResourceNotFoundException
+import br.com.estudo.mapper.Mapper
 import br.com.estudo.model.Person
 import br.com.estudo.repository.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.concurrent.atomic.AtomicLong
 import java.util.logging.Logger
 
 @Service
@@ -15,21 +16,25 @@ class PersonService {
 
     private val logger = Logger.getLogger(PersonService::class.java.name)
 
-    fun findById(id: Long): Person {
+    fun findById(id: Long): PersonVO {
         logger.info("findById: $id")
-        return repository.findById(id).orElseThrow(){ResourceNotFoundException("Person not found for this id :: $id")}
-    }
+        val person = repository.findById(id)
+            .orElseThrow(){ResourceNotFoundException("Person not found for this id :: $id")}
+        return Mapper.parseObject(person, PersonVO::class.java)}
 
-    fun findAll(): List<Person> {
+    fun findAll(): List<PersonVO> {
         logger.info("findAll")
-        return repository.findAll()
-    }
-    fun create(person: Person): Person {
-        logger.info("create Person $person")
-        return repository.save(person)
+        val people = repository.findAll()
+        return Mapper.parseListObjects(people, PersonVO::class.java)
     }
 
-    fun update(person: Person): Person {
+    fun create(person: PersonVO): PersonVO {
+        logger.info("create Person $person")
+        val entity = Mapper.parseObject(person, Person::class.java)
+        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
+    }
+
+    fun update(person: PersonVO): PersonVO {
         logger.info("updating person $person")
 
         val entity =repository.findById(person.id)
@@ -39,7 +44,7 @@ class PersonService {
         entity.lastName = person.lastName
         entity.address = person.address
         entity.gender = person.gender
-        return repository.save(entity)
+        return Mapper.parseObject(repository.save(entity), PersonVO::class.java)
     }
 
     fun delete(id: Long) {
