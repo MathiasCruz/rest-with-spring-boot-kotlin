@@ -10,7 +10,7 @@ import br.com.estudo.unittests.mapper.mocks.MockPerson
 
 class MapperTest {
 
-    var inputObject: MockPerson? = null
+    private var inputObject: MockPerson? = null
 
     @BeforeEach
     fun setUp() {
