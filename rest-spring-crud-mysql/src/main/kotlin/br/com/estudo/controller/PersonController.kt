@@ -22,31 +22,31 @@ class PersonController {
     private  lateinit var service: PersonService
 
     @GetMapping(value = ["/{id}"],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun findById(@PathVariable(value="id") id : Long): PersonVO {
         return service.findById(id)
     }
 
     @DeleteMapping(value = ["/{id}"],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun deleteById(@PathVariable(value="id") id : Long):ResponseEntity<*> {
         service.delete(id)
         return ResponseEntity.noContent().build<Any>()
     }
 
-    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun findAll(): List<PersonVO> {
         return service.findAll()
     }
 
-    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE])
     fun createPerson(@RequestBody person: PersonVO): PersonVO{
         return service.create(person)
     }
 
-    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun updatePerson(@RequestBody person: PersonVO): PersonVO{
         return service.update(person)
     }
