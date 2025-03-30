@@ -23,13 +23,13 @@ class CustomizedExceptionResponseHandler :ResponseEntityExceptionHandler() {
         return ResponseEntity<CustomizedResponse>(exception, HttpStatus.BAD_REQUEST)
     }
 
-@ExceptionHandler(ResourceNotFoundException::class)
-fun handleNotFoundException(ex: ResourceNotFoundException, request: WebRequest): ResponseEntity<CustomizedResponse> {
-    val exception = CustomizedResponse(
-        Date(),
-        ex.message,
-        request.getDescription(false)
-    )
-    return ResponseEntity<CustomizedResponse>(exception, HttpStatus.NOT_FOUND)
-    }
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun handleNotFoundException(ex: ResourceNotFoundException, request: WebRequest): ResponseEntity<CustomizedResponse> {
+        val exception = CustomizedResponse(
+            Date(),
+            ex.message,
+            request.getDescription(false)
+        )
+        return ResponseEntity<CustomizedResponse>(exception, HttpStatus.NOT_FOUND)
+        }
 }
