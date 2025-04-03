@@ -1,10 +1,14 @@
 package br.com.estudo.mapper
 
-import org.modelmapper.ModelMapper
+import br.com.estudo.data.vo.v1.PersonVO
+import br.com.estudo.model.Person
+
+import com.github.dozermapper.core.DozerBeanMapperBuilder
+import com.github.dozermapper.core.Mapper
 
 object Mapper {
 
-    private val mapper = ModelMapper()
+    private val mapper : Mapper = DozerBeanMapperBuilder.buildDefault()
 
     fun <O, D> parseObject(origin: O, destination: Class<D>?): D = mapper.map(origin, destination)
 
