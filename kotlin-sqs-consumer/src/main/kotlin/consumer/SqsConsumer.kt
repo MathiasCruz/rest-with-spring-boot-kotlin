@@ -21,7 +21,7 @@ class SqsConsumer(
 
     fun start() = launch {
         val messageChanel = Channel<Message>()
-        repeat(4) { launchWorker(messageChanel) }
+        repeat(2) { launchWorker(messageChanel) }
         launchMsgReceiver(messageChanel)
     }
     fun stop(){
