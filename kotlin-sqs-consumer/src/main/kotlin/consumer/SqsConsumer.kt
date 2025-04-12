@@ -19,7 +19,7 @@ class SqsConsumer(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + supervisorJob
 
-    private fun start() = launch {
+    fun start() = launch {
         val messageChanel = Channel<Message>()
         repeat(4) { launchWorker(messageChanel) }
         launchMsgReceiver(messageChanel)
@@ -45,7 +45,7 @@ class SqsConsumer(
     private fun CoroutineScope.launchMsgReceiver(channel: SendChannel<Message>) = launch {
         repeatUntilCanceled {
             val receiveRequest = ReceiveMessageRequest.builder()
-                .queueUrl("url")
+                .queueUrl("https://localhost.localstack.cloud:4566/000000000000/test-queue")
                 .waitTimeSeconds(20)
                 .maxNumberOfMessages(5)
                 .build()
