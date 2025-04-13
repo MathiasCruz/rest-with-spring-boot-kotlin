@@ -1,12 +1,11 @@
 package org.example.utils
 
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.yield
+import kotlinx.coroutines.*
 import java.lang.Thread.currentThread
 
-suspend fun CoroutineScope.repeatUntilCanceled(block : suspend () -> Unit) {
+fun CoroutineScope.repeatUntilCanceled( dispatcher: CoroutineDispatcher = Dispatchers.Default,
+                                        block : suspend () -> Unit) = launch(dispatcher)
+{
     while (isActive) {
         try {
             block()
