@@ -42,6 +42,14 @@ class SqsConsumer(
         println("${Thread.currentThread().name} processed message ${msg.body()}")
     }
 
+    private suspend fun deleteMessage(msg: Message) {
+        sqs.deleteMessage{ req ->
+            req.queueUrl("https://localhost.localstack.cloud:4566/000000000000/test-queue")
+            req.receiptHandle(msg.receiptHandle())
+        }.await()
+        println("Deleted message ${msg.messageId()}")
+    }
+
     private fun CoroutineScope.launchMsgReceiver(channel: SendChannel<Message>) = launch {
         repeatUntilCanceled {
             val receiveRequest = ReceiveMessageRequest.builder()
