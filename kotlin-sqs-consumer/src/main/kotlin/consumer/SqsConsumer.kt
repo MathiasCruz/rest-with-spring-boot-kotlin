@@ -51,7 +51,7 @@ class SqsConsumer(
     }
 
     private fun CoroutineScope.launchMsgReceiver(channel: SendChannel<Message>) = launch {
-        repeatUntilCanceled {
+        repeatUntilCanceled(Dispatchers.IO) {
             val receiveRequest = ReceiveMessageRequest.builder()
                 .queueUrl("https://localhost.localstack.cloud:4566/000000000000/test-queue")
                 .waitTimeSeconds(20)
