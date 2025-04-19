@@ -3,3 +3,5 @@ aws:
   sqs:
     queue:
       url: https://localhost.localstack.cloud:4566/000000000000/test-queue
+server:
+  port: 8081
