@@ -12,7 +12,7 @@ import java.net.URI
 @Configuration
 class AwsConfig {
 
-    @Value("\${aws.queue.url}")
+    @Value("\${aws.sqs.queue.url}")
     private lateinit  var queueUrl: String
 
     @Bean
